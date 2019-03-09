@@ -1,0 +1,19 @@
+.tableBox {
+    position: relative;
+    margin: 0 auto;
+    width: 450px;
+    height: 450px;
+    background-color: #f0f0f0;
+    background-image: repeating-linear-gradient(0deg,#aaa, #aaa, 1px, transparent 0, transparent 15px),
+        repeating-linear-gradient(90deg, #aaa, #aaa, 1px, transparent 0, transparent 15px);
+    border: 1px solid #aaa;
+    border-width: 1px 1px 0 0;
+}
+.overedTable {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    background-color: rgba(0,0,0,.3);
+}

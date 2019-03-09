@@ -1,0 +1,95 @@
+.body, .content {
+    width: 100%;
+    display: flex;
+}
+
+.content {
+    width: 960px;
+    margin: 40px auto;
+    overflow: auto;
+}
+
+.leftCont {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    margin-right: 40px;
+    width: 400px;
+}
+.rightCont {
+    display: flex;
+    flex: 1;
+    width: 520px;
+}
+
+@media screen and (max-width: 1040px) and (min-width: 840px) {
+    .content {
+        width: 90%;
+        flex-direction: column;
+    }
+    .leftCont {
+        width: 100%;
+        flex-direction: row;
+        margin-right: 0;
+        margin-bottom: 40px;
+    }
+    .rightCont {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 840px) {
+    .content {
+        width: 90%;
+        flex-direction: column;
+    }
+    .leftCont {
+        width: 100%;
+        flex-direction: column;
+        margin-right: 0;
+        margin-bottom: 40px;
+    }
+    .rightCont {
+        width: 100%;
+    }
+}
+.lifeBox {
+    flex: 1;
+    padding: 20px;
+    margin:12px;
+    color: #444;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 2px dotted #ccf;
+    border-radius: 12px;
+    text-align: center;
+}
+
+input[type="date"],
+input[type="number"] {
+    padding: 4px 0 2px;
+    margin: 0 2px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+input[type="date"] {
+    width: 124px;
+}
+input[type="number"] {
+    width: 50px;
+}
+.emphasis {
+    font-weight: 600;
+    font-size: 16px;
+}
+.overed {
+    color: #966;
+}
+.rest {
+    color: #696
+}
+.lifeBoxTitle {
+    color: #69bcef;
+}
