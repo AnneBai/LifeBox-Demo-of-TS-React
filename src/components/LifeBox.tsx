@@ -31,6 +31,14 @@ class LifeBox extends React.Component<object, State> {
         };
     }
 
+    getMinLifeYear = () => {
+        const birthday = moment(this.state.birthday);
+        if (!birthday.isValid() || birthday.isAfter(moment())) {
+            return 0;
+        }
+        return moment().diff(birthday, "years") + 1;
+    }
+
     updateBirthday = (value: string) => {
         this.setState({
             birthday: value,
@@ -47,6 +55,7 @@ class LifeBox extends React.Component<object, State> {
         const { birthday, lifeYear } = this.state;
         const [totalDays, totalMonths] = getTotal(birthday, lifeYear);
         const [overedDays, overedMonths] = getOvered(birthday);
+        const minLifeYear = this.getMinLifeYear();
         return (
             <div className="content">
                 <div className="leftCont">
@@ -55,6 +64,7 @@ class LifeBox extends React.Component<object, State> {
                         <div>
                             <label htmlFor="birthday">我的生日是
                                 <input
+                                    className={moment(birthday).isAfter(moment()) ? "warning" : ""}
                                     name="birthday"
                                     type="date"
                                     value={birthday}
@@ -70,8 +80,10 @@ class LifeBox extends React.Component<object, State> {
                             <label htmlFor="lifeYear">
                                 我会活到
                                 <input
+                                    className={minLifeYear > lifeYear ? "warning" : ""}
                                     name="lifeYear"
                                     type="number"
+                                    min={minLifeYear}
                                     value={lifeYear}
                                     onChange={(e) => {
                                         this.updateLifeYear(+(e.target.value));
@@ -96,7 +108,11 @@ class LifeBox extends React.Component<object, State> {
                 </div>
                 <div className="rightCont">
                     <div className="lifeBox">
-                        <TableBox total={totalMonths} overed={overedMonths} />
+                        {
+                            moment(birthday).isValid() && (
+                                <TableBox total={totalMonths} overed={overedMonths} />
+                            )
+                        }
                     </div>
                 </div>
             </div>

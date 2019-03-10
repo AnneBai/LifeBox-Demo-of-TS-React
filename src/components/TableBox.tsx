@@ -9,16 +9,20 @@ interface Props {
  * 每行30格， 每格15px
  */
 
+const unit = 15;
+const rowUnits = 30;
+
 export default function TableBox({total, overed}: Props) {
-    const totalHeight = Math.ceil(total / 30) * 15;
-    const bottomOffset = totalHeight - Math.floor(overed / 30) * 15; // 整行格子
-    const rightOffset = (30 - (overed % 30)) * 15; // 不足一行的格子
-    const leftOffset = (total % 30) * 15; // 右下角多余格子
+    const totalRows = Math.ceil(total / rowUnits);
+    const overedRows = Math.floor(overed / rowUnits);
+    const overedSingleRowUnits = overed % rowUnits;
+    const lastSingleRowUnits = total % rowUnits;
+    const bottomOffset = totalRows > overedRows ? (totalRows - overedRows) * unit : 0;  // 整行格子
     return (
         <div
             className="tableBox"
             style={{
-                height: totalHeight,
+                height: totalRows * unit,
             }}
         >
             <div
@@ -28,23 +32,33 @@ export default function TableBox({total, overed}: Props) {
                 }}
             >
             </div>
-            <div
-                className="overedTable"
-                style={{
-                    top: totalHeight - bottomOffset,
-                    bottom: bottomOffset - 15,
-                    right: rightOffset,
-                }}
-            >
-            </div>
-            <div
-                className="overedTable"
-                style={{
-                    top: totalHeight - 15,
-                    left: leftOffset === 0 ? "100%" : leftOffset,
-                }}
-            >
-            </div>
+            {
+                 totalRows > overedRows && overedSingleRowUnits > 0
+                    ? (
+                        <div
+                            className="overedTable"
+                            style={{
+                                top: totalRows > overedRows ? overedRows * unit : 0,
+                                bottom: bottomOffset - unit,
+                                right: (rowUnits - overedSingleRowUnits) * unit,
+                            }}
+                        >
+                        </div>
+                    ) : null
+            }
+            {
+                lastSingleRowUnits > 0 && totalRows > 1
+                    ? (
+                        <div
+                            className="overedTable toRemove"
+                            style={{
+                                top: (totalRows - 1) * unit,
+                                left: lastSingleRowUnits * unit,
+                            }}
+                        >
+                        </div>
+                    ) : null
+            }
         </div>
     );
 }

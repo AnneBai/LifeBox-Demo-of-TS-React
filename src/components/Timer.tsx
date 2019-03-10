@@ -5,6 +5,10 @@ interface State {
     second: string;
 }
 
+interface StaticState {
+    task: number;
+}
+
 function getHour(): string {
     return padStr(23 - moment().hours());
 }
@@ -21,7 +25,9 @@ function padStr(num: number): string {
     return String(num).padStart(2, "0");
 }
 
-export default class Timer extends React.Component<object, State> {
+export default class Timer extends React.Component<object, State, StaticState> {
+
+    taskId: number;
 
     constructor(props: object) {
         super(props);
@@ -31,14 +37,18 @@ export default class Timer extends React.Component<object, State> {
     }
     
     componentDidMount() {
-        requestAnimationFrame(this.updateSecond);
+        this.taskId = requestAnimationFrame(this.updateSecond);
+    }
+
+    componentWillUnmount() {
+        cancelAnimationFrame(this.taskId);
     }
 
     updateSecond = () => {
         this.setState({
             second: getSecond(),
         });
-        requestAnimationFrame(this.updateSecond);
+        this.taskId = requestAnimationFrame(this.updateSecond);
     }
 
     render() {
