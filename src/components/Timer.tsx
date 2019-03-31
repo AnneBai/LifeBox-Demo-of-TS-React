@@ -27,7 +27,7 @@ function padStr(num: number): string {
 
 export default class Timer extends React.Component<object, State, StaticState> {
 
-    taskId: number;
+    taskId: NodeJS.Timeout;
 
     constructor(props: object) {
         super(props);
@@ -37,18 +37,18 @@ export default class Timer extends React.Component<object, State, StaticState> {
     }
     
     componentDidMount() {
-        this.taskId = requestAnimationFrame(this.updateSecond);
+        this.taskId = setTimeout(this.updateSecond, 1000);
     }
 
     componentWillUnmount() {
-        cancelAnimationFrame(this.taskId);
+        clearTimeout(this.taskId);
     }
 
     updateSecond = () => {
         this.setState({
             second: getSecond(),
         });
-        this.taskId = requestAnimationFrame(this.updateSecond);
+        this.taskId = setTimeout(this.updateSecond, 1000);
     }
 
     render() {
